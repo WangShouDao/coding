@@ -1,0 +1,28 @@
+题目描述
+一个整型数组里除了两个数字之外，其他的数字都出现了两次。
+请写程序找出这两个只出现一次的数字。
+
+
+可以用位运算实现，如果将所有所有数字相异或，则最后的结果肯定是那两个只出现一次的数字异或
+ 的结果，所以根据异或的结果1所在的最低位，把数字分成两半，每一半里都还有只出现一次的数据和成对出现的数据
+ 这样继续对每一半相异或则可以分别求出两个只出现一次的数字
+
+
+//num1,num2分别为长度为1的数组。传出参数
+//将num1[0],num2[0]设置为返回结果
+public class Solution {
+    public void FindNumsAppearOnce(int [] array,int num1[] , int num2[]) {
+        if(array.length<2) return;
+        int tmp = 0;
+        int flag = 1;
+        for(int i=0;i<array.length;i++){
+            tmp^=array[i];
+        }
+        while((flag&tmp)==0) flag<<=1;
+        for(int i=0;i<array.length;i++){
+            if((flag&array[i])==0) num2[0] ^= array[i];
+            else
+                num1[0] ^= array[i];
+        }
+    }
+}
