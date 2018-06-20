@@ -1,0 +1,71 @@
+题目描述
+输入两个链表，找出它们的第一个公共结点。
+
+
+import java.util.HashMap;
+/*
+public class ListNode {
+    int val;
+    ListNode next = null;
+
+    ListNode(int val) {
+        this.val = val;
+    }
+}*/
+public class Solution {
+    public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+        ListNode current1 = pHead1;
+        ListNode current2 = pHead2;
+        HashMap<ListNode, Integer> hashMap = new HashMap<ListNode, Integer>();
+        while(current1!=null){
+            hashMap.put(current1, null);
+            current1 = current1.next;
+        }
+        while(current2!=null){
+            if(hashMap.containsKey(current2))
+                return current2;
+            current2 = current2.next;
+        }
+        return null;
+    }
+}
+
+
+public class Solution {
+    public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+        ListNode current1 = pHead1;
+        ListNode current2 = pHead2;
+        while(pHead1==null||pHead2==null)
+            return null;
+        int len1 = getLength(current1);
+        int len2 = getLength(current2);
+        if(len1>len2){
+            int count=0;
+            while(count<len1-len2){
+                current1 = current1.next;
+                ++count;
+            }
+        }
+        if(len1<len2){
+            int count=0;
+            while(count<len2-len1){
+                current2 = current2.next;
+                ++count;
+            }
+        }
+        while(current1!=current2){
+            current1 = current1.next;
+            current2 = current2.next;
+        }
+        return current1;
+    }
+    
+    public int getLength(ListNode node){
+        int count = 0;
+        while(node!=null){
+            node = node.next;
+            ++count;
+        }
+        return count;
+    }
+}
