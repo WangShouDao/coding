@@ -1,0 +1,47 @@
+题目描述
+
+Given a linked list, return the node where the cycle begins. If there is no cycle, returnnull.
+
+Follow up:
+Can you solve it without using extra space?
+
+
+/**
+思路：
+1.还是先用快慢指针方法，找出快慢指针相遇的点；
+2.重新定义两个指针，一个为head，另一个为快慢指针相遇点；
+3.两个指针每次走一步，相遇点则是链表环的起点；
+*/
+
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        if(head==null||head.next==null)
+            return null;
+        ListNode fast = head;
+        ListNode slow = head;
+        while(fast.next!=null&&fast.next.next!=null){
+            fast = fast.next.next;
+            slow = slow.next;
+            if(fast == slow){
+                slow = head;
+                while(slow!=fast){
+                    fast = fast.next;
+                    slow = slow.next;
+                }
+                return slow;
+            }
+        }
+        return null;
+    }
+}
