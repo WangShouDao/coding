@@ -1,0 +1,40 @@
+小易有一个长度为N的正整数数列A = {A[1], A[2], A[3]..., A[N]}。
+牛博士给小易出了一个难题:
+对数列A进行重新排列,使数列A满足所有的A[i] * A[i + 1](1 ≤ i ≤ N - 1)都是4的倍数。
+小易现在需要判断一个数列是否可以重排之后满足牛博士的要求。
+
+import java.util.ArrayList;
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        ArrayList<String> result = new ArrayList<>();
+        for(int i=0;i<n;i++) {
+            int k = sc.nextInt();
+            ArrayList<Integer> temp = new ArrayList<>();
+            for(int j=0;j<k;j++) {
+                temp.add(sc.nextInt());
+            }
+            result.add(sort(temp));
+        }
+        for(String str:result) {
+            System.out.println(str);
+        }
+    }
+     
+    public static String sort(ArrayList<Integer> list) {
+        int a1 = 0, a2 = 0, a3 =0;
+        for(Integer i : list) {
+            if(i%2!=0)
+                a1++;
+            else if(i%2==0&&i%4!=0)
+                a2++;
+            else
+                a3++;
+        }
+        if(a3>=a1||(a3+1==a1&&a2==0))
+            return "Yes";
+        return "No";
+    }
+}
