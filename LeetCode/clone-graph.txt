@@ -1,0 +1,91 @@
+题目描述
+
+Clone an undirected graph. Each node in the graph contains alabeland a list of itsneighbors.
+
+
+OJ's undirected graph serialization:
+Nodes are labeled uniquely.
+
+We use#as a separator for each node, and,as a separator for node label and each neighbor of the node.
+
+As an example, consider the serialized graph{0,1,2# 1,2# 2,2}.
+
+The graph has a total of three nodes, and therefore contains three parts as separated by#.
+
+First node is labeled as0. Connect node0to both nodes1and2.
+Second node is labeled as1. Connect node1to node2.
+Third node is labeled as2. Connect node2to node2(itself), thus forming a self-cycle.
+
+Visually, the graph looks like the following:
+
+       1
+      / \
+     /   \
+    0 --- 2
+         / \
+         \_/
+
+
+递归：
+/**
+ * Definition for undirected graph.
+ * class UndirectedGraphNode {
+ *     int label;
+ *     ArrayList<UndirectedGraphNode> neighbors;
+ *     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
+ * };
+ */
+import java.util.*;
+public class Solution {
+    HashMap<Integer, UndirectedGraphNode> map = new HashMap<>();
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        return clone(node);
+    }
+    
+    public UndirectedGraphNode clone(UndirectedGraphNode node){
+        if(node==null) return null;
+        if(map.containsKey(node.label)){
+            return map.get(node.label);
+        }
+        UndirectedGraphNode newNode = new UndirectedGraphNode(node.label);
+        map.put(newNode.label, newNode);
+        for(UndirectedGraphNode neighbor : node.neighbors){
+            newNode.neighbors.add(clone(neighbor));
+        }
+        return newNode;
+    }
+}
+
+
+非递归：
+import java.util.Stack;
+import java.util.LinkedList;
+import java.util.HashMap;
+ 
+public class Solution {
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+         
+        if(node == null) return null;
+         
+        HashMap<UndirectedGraphNode,UndirectedGraphNode> map = new HashMap<UndirectedGraphNode,UndirectedGraphNode>();
+        //栈，放入遍历的节点
+        Stack<UndirectedGraphNode> nodeStack = new Stack<UndirectedGraphNode>();
+        nodeStack.push(node);
+         
+        while(!nodeStack.empty()){
+             
+            UndirectedGraphNode tempNode = nodeStack.pop();
+            if(map.containsKey(tempNode)) continue;
+            UndirectedGraphNode copyNode = new UndirectedGraphNode(tempNode.label);
+             
+            for(UndirectedGraphNode unode : tempNode.neighbors){
+                copyNode.neighbors.add(unode);
+                if(map.containsKey(node)) continue;
+                nodeStack.push(unode);
+            }
+            map.put(tempNode,copyNode);
+        }
+         
+        return map.get(node);
+    }
+}
