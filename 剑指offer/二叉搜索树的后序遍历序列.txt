@@ -24,4 +24,4 @@ public class Solution {
         }
         return IsTreeBST(sequence, start, i-1)&&IsTreeBST(sequence, i, end-1);
     }
-}
+} 

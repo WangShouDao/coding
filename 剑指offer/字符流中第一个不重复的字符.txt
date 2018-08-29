@@ -27,5 +27,5 @@ public class Solution {
                 return ch;
         }
         return '#';
-    }
+    } 
 }

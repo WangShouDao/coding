@@ -12,7 +12,7 @@ public class Solution {
         int len = array.length;
         int count = 1;
         int num = array[0];
-        for(int i=0;i<len;i++){
+        for(int i=1;i<len;i++){
             if(num == array[i])
                 ++count;
             else
